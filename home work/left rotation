@@ -1,0 +1,63 @@
+import java.util.Arrays;
+
+public class LeftRotateArray {
+
+    // ----------------------- BRUTE FORCE APPROACH -----------------------
+    public static void leftRotateBruteForce(int[] arr, int k) {
+        int n = arr.length;
+        k = k % n; // To avoid extra rotations
+
+        for (int i = 0; i < k; i++) {
+            int first = arr[0]; // Store first element
+
+            // Shift all elements to the left by 1
+            for (int j = 0; j < n - 1; j++) {
+                arr[j] = arr[j + 1];
+            }
+            arr[n - 1] = first; // Put first element at end
+        }
+    }
+
+
+    // ----------------------- RECURSIVE APPROACH -----------------------
+    public static void leftRotateRecursive(int[] arr, int k) {
+        int n = arr.length;
+        k = k % n; // Simplify for large k
+
+        rotateHelper(arr, k);
+    }
+
+    private static void rotateHelper(int[] arr, int k) {
+        if (k == 0)
+            return; // Base case
+
+        rotateOnce(arr); // Rotate array by 1 position
+        rotateHelper(arr, k - 1); // Recursive call
+    }
+
+    private static void rotateOnce(int[] arr) {
+        int first = arr[0];
+
+        for (int i = 0; i < arr.length - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        arr[arr.length - 1] = first;
+    }
+
+
+    // ----------------------- MAIN METHOD (TESTING) -----------------------
+    public static void main(String[] args) {
+
+        int[] arr1 = {1, 2, 3, 4, 5};
+        int[] arr2 = {1, 2, 3, 4, 5};
+        int k = 2;
+
+        // Brute force
+        leftRotateBruteForce(arr1, k);
+        System.out.println("Brute Force Rotation: " + Arrays.toString(arr1));
+
+        // Recursive
+        leftRotateRecursive(arr2, k);
+        System.out.println("Recursive Rotation:  " + Arrays.toString(arr2));
+    }
+}
